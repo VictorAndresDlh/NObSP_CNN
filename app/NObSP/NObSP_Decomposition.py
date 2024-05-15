@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+from tqdm.notebook import tqdm
 
 # Set of functions that implement NObSP in SVM and NN models.
 #
@@ -156,8 +157,8 @@ def NObSP_NN_single_MultiOutput_reg(X, y_est, model):
     #X_target_tot = X_target_tot-torch.mean(X_target_tot,dim=0) # Centaring the data
     P_x_target = torch.linalg.pinv(torch.t(X_target_tot)@X_target_tot)@torch.t(X_target_tot) # Finding the projection matrix onto the matrix tused to find the alpha coeficients, out-of-sample extension 
     
-    for l in range(p):
-        for i in range(d):
+    for l in tqdm(range(p), desc="Number of tensors"):
+        for i in tqdm(range(d), desc="Lenght of tensors"):
         
             # Defining the input matrix that will be used to find the subspace of the nonlinear transformation of 
             # the input variables x_i, onto which the output will be projected
