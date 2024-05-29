@@ -139,7 +139,6 @@ def NObSP_NN_single_MultiOutput_reg(X, y_est, model):
     print("beta: ", betas_tensor.shape)
 
     X_target = torch.zeros((N,d), dtype=torch.float)
-    X_reference = torch.zeros((N,d), dtype=torch.float)
 
     indices = np.argmax(F.softmax(y_est, dim=1), axis=1)
     indices = np.unique(indices)
@@ -149,6 +148,7 @@ def NObSP_NN_single_MultiOutput_reg(X, y_est, model):
         for i in range(d):
             if l in indices:
                 X_target[:,i] = X[:,i]
+                X_reference = X.clone()
                 X_reference[:,i] = 0
 
                 with torch.inference_mode():
